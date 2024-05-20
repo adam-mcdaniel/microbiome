@@ -1,0 +1,24 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+   Compiling agario v0.1.0 (/home/adam/Documentos/rust/agario)
+error[E0369]: cannot divide `Mass` by `{float}`
+   --> src/lib.rs:576:75
+    |
+576 |         self.mass = self.mass + Mass::default() * seconds_since_last_tick / 100.0;
+    |                                 ----------------------------------------- ^ ----- {float}
+    |                                 |
+    |                                 Mass
+    |
+note: an implementation of `Div<{float}>` might be missing for `Mass`
+   --> src/lib.rs:581:1
+    |
+581 | pub struct Mass(pub f64);
+    | ^^^^^^^^^^^^^^^ must implement `Div<{float}>`
+note: the trait `Div` must be implemented
+   --> /home/adam/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/ops/arith.rs:446:1
+    |
+446 | pub trait Div<Rhs = Self> {
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0369`.
+error: could not compile `agario` (lib) due to previous error
