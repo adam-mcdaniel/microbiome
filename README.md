@@ -10,12 +10,11 @@ This repository implements an Agar.io-like game that takes place in a petri dish
 
 Red particles are food, and other colors represent microbes. The player controls their microbes (which are centered on the screen) by moving the mouse. The microbes will follow the mouse cursor. The player can press the space bar to perform mitosis, creating new microbes. Smaller microbes travel faster and are more agile, but larger microbes can eat smaller ones. The player's microbes can also merge together by colliding with each other.
 
+![Gameplay Image](assets/gameplay.png)
+
 ### The AI
 
 Each color of microbe is controlled by a separate AI instance. This AI looks at the surrounding microbes and food particles to determine the best course of action. It performs a weighted sum of the vectors pointing to each nearby microbe and food particle to determine the direction to move, using positive weights for food and smaller microbes, and negative weights for larger microbes. The AI also has a chance to perform mitosis or to merge its microbes. The AI is surprisingly effective at picking off smaller microbes and avoiding larger ones! Watch out!
-
-![Gameplay Image](assets/gameplay.png)
-
 
 ### Winning the Game
 
