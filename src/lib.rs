@@ -13,6 +13,7 @@ pub fn random() -> f64 {
 pub struct World {
     pub players: Vec<Player>,
     pub entities: HashMap<ID, Entity>,
+    pub tick: u64,
 }
 
 impl World {
@@ -20,6 +21,7 @@ impl World {
         World {
             players: Vec::new(),
             entities: HashMap::new(),
+            tick: 0,
         }
     }
 
@@ -178,12 +180,22 @@ impl World {
             }
         }
 
+        // Every 60 ticks, add new food
+        if self.tick % 45 == 0 {
+            for _ in 0..100 {
+                let pos = Position(random(), random());
+                self.add_entity(Entity::Food(Food::new(Mass::default() * (random() + 3.0), pos)));
+            }
+        }
+
         let players = self.get_players().into_iter().map(|player| *player).collect::<Vec<_>>();
         for player in players {
             if self.get_player_cells(&player).len() == 0 {
                 self.remove_player(player.get_id());
             }
         }
+
+        self.tick += 1;
     }
 }
 
@@ -540,7 +552,7 @@ impl Cell {
         }
 
         self.age += seconds_since_last_tick;
-        self.mass = self.mass * (1.0 - 0.03 * seconds_since_last_tick);
+        self.mass = self.mass * (1.0 - 0.015 * seconds_since_last_tick);
     }
 
     // Make the cell follow the player's controls
@@ -621,7 +633,7 @@ impl Food {
     
     pub fn tick(&mut self, my_id: ID, seconds_since_last_tick: f64, _world: &mut World) {
         // Grow the food with compound interest
-        self.mass = self.mass * (1.0 + 0.01 * seconds_since_last_tick);
+        self.mass = self.mass * (1.0 + 0.015 * seconds_since_last_tick);
     }
 }
 
@@ -630,7 +642,7 @@ pub struct Mass(pub f64);
 
 impl Default for Mass {
     fn default() -> Self {
-        Mass::from_radius(1.0 / 1024.0)
+        Mass::from_radius(2.0 / 1024.0)
     }
 }
 
@@ -642,7 +654,7 @@ impl Mass {
         let slowness = (default_mass / self.0).sqrt();
 
         // The speed is multiplied by the slowness
-        speed * 5.0 * slowness
+        speed * 4.0 * slowness
     }
 
     pub fn to_radius(&self) -> f64 {

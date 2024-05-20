@@ -37,7 +37,7 @@ impl Default for MyGame {
         
         let mut world = World::new();
         let player = world.create_new_player(name, color);
-        for _ in 0..10 {
+        for _ in 0..20 {
             let pos = Position(random(), random());
             world.add_entity(Entity::Cell(Cell::new(Mass::default() * 500.0, pos, Direction::from_radians(random() * std::f64::consts::PI), Speed::default(), Some(player))));
         }
@@ -71,11 +71,11 @@ impl Default for MyGame {
             // eprintln!("food added at {:?}", pos);
         }
     
-        for _ in 0..20 {
+        for _ in 0..30 {
             let pos = Position(random(), random());
             for _ in 0..50 {
                 let local_pos = pos + Position(random() * 0.05, random() * 0.05);
-                world.add_entity(Entity::Food(Food::new(Mass::default() * (random() + 2.0), local_pos)));
+                world.add_entity(Entity::Food(Food::new(Mass::default() * (random() + 3.0), local_pos)));
                 // eprintln!("food added at {:?}", pos);
             }
             // eprintln!("food added at {:?}", pos);
